@@ -41,11 +41,18 @@
 
 <script>
 import MyHeader from './Header.vue'
+import {
+    mapActions,
+    mapGetters
+} from 'vuex'
+import {
+    mapMutations
+} from 'vuex'
+
 export default {
     name: 'imain',
     data() {
         return {
-            products: {},
             cart: []
         }
     },
@@ -53,6 +60,9 @@ export default {
         MyHeader
     },
     methods: {
+        ...mapActions([
+            'initStore'
+        ]),
         checkRating(n, myProduct) {
             return myProduct.rating - n >= 0;
         },
@@ -74,6 +84,9 @@ export default {
         }
     },
     computed: {
+        ...mapGetters([
+            'products'
+        ]),
         cartItemCount() {
             return this.cart.length || '';
         },
@@ -114,11 +127,7 @@ export default {
 
     },
     created: function () {
-        axios.get('/static/products.json')
-            .then((response) => {
-                this.products = response.data.products;
-                console.log(this.products);
-            });
+        this.initStore();
     }
 }
 </script>
