@@ -8,7 +8,7 @@
         </div>
         <div class="nav navbar-nav navbar-right cart">
             <router-link active-class="active" tag="button" class="btn btn-default btn-lg" :to="{name: 'Form'}">
-                <span class="glyphicon glyphicon-shopping-cart">{{ cartItemCount}}</span> Checkout
+                <span class="glyphicon glyphicon-shopping-cart">{{ this.cart.length || '' }}</span> Checkout
             </router-link>
         </div>
     </div>
@@ -16,6 +16,9 @@
 </template>
 
 <script>
+import {
+    mapGetters
+} from 'vuex'
 export default {
     name: 'hello',
     data() {
@@ -23,7 +26,11 @@ export default {
             sitename: "Vue.js Pet Depot",
         }
     },
-    props: ['cartItemCount'],
+    computed: {
+        ...mapGetters([
+            'cart'
+        ])
+    },
     methods: {
         showCheckout() {
             this.$router.push({

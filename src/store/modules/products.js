@@ -1,9 +1,11 @@
 const state = {
-    products: {}
+    products: {},
+    cart: []
 };
 
 const getters = {
-    products: state => state.products
+    products: state => state.products,
+    cart: state => state.cart,
 };
 
 const actions = {
@@ -19,6 +21,12 @@ const actions = {
 const mutations = {
     'SET_STORE' (state, products) {
         state.products = products;
+    },
+    'SET_CART' (state, cart){
+        state.cart.push(cart);
+    },
+    'DELL_CART' (state, key){
+        state.cart.splice(key,1);
     }
 };
 

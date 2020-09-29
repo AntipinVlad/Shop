@@ -1,6 +1,6 @@
 <template>
 <div>
-    <my-header :cartItemCount="cartItemCount"></my-header>
+    <my-header></my-header>
     <main>
         <div v-for="product in sortedProducts" v-bind:key="product.id">
             <div class="row">
@@ -52,9 +52,7 @@ import {
 export default {
     name: 'imain',
     data() {
-        return {
-            cart: []
-        }
+        return {}
     },
     components: {
         MyHeader
@@ -67,10 +65,9 @@ export default {
             return myProduct.rating - n >= 0;
         },
         addToCart(aProduct) {
-            this.cart.push(aProduct.id);
+            this.$store.commit('SET_CART', aProduct)
         },
         canAddToCart(aProduct) {
-            //return this.product.availableInventory > this.cartItemCount;
             return aProduct.availableInventory > this.cartCount(aProduct.id);
         },
         cartCount(id) {
@@ -85,11 +82,9 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'products'
+            'products',
+            'cart'
         ]),
-        cartItemCount() {
-            return this.cart.length || '';
-        },
         sortedProducts() {
             if (this.products.length > 0) {
                 let productsArray = this.products.slice(0);
